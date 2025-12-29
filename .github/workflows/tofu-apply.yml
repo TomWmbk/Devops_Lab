@@ -1,0 +1,26 @@
+name: Tofu Apply
+on:
+  push:
+    branches: ["main"]
+    paths: ["td5/scripts/tofu/live/lambda-sample/**"]
+jobs:
+  apply:
+    name: "Tofu Apply"
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      - uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.APPLY_ROLE_ARN }}
+          role-session-name: apply-${{ github.run_number }}
+          aws-region: us-east-2
+      - uses: opentofu/setup-opentofu@v1
+      - name: Tofu apply
+        working-directory: td5/scripts/tofu/live/lambda-sample
+        run: |
+          tofu init -no-color -input=false
+          tofu apply -no-color -input=false -auto-approve

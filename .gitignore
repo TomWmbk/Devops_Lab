@@ -1,0 +1,14 @@
+# Ignorer les dossiers OpenTofu/Terraform (les binaires lourds)
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+*.tfvars
+.terraform.lock.hcl
+
+# Ignorer les dépendances Node.js (trop lourd aussi)
+node_modules/
+**/node_modules/
+
+# Ignorer les fichiers systèmes Mac
+.DS_Store

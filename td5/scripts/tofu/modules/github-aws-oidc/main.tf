@@ -1,0 +1,11 @@
+variable "provider_url" {}
+
+resource "aws_iam_openid_connect_provider" "github" {
+  url             = var.provider_url
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1", "1c58a3a8518e8759bf075b76b750d4f2df264fcd"]
+}
+
+output "oidc_provider_arn" {
+  value = aws_iam_openid_connect_provider.github.arn
+}
